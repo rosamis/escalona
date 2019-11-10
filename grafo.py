@@ -1,44 +1,30 @@
-# Python program to detect cycle 
-# in a grafo 
+from collections import defaultdict
 
-from collections import defaultdict 
+class Grafo():
+	def __init__(self,nome):
+		self.nome = nome
+		self._data = defaultdict(list)
+		self.vertices = []
 
-class Grafo(): 
-	def __init__(self, vertices): 
-		self.grafo = defaultdict(list) 
-		self.vertices = vertices 
+	def add_vertice(self,n):
+		self.vertices.append(n)
 
-	def add_aresta(self, u, v): 
-		self.grafo[u].append(v) 
+	def conectar(self, nodo_origem, nodo_destino):
+		self._data[nodo_origem].append(nodo_destino)
 
-	def isCyclicUtil(self, v, visited, recStack): 
+	def vizinhos(self, nodo):
+		return self._data[nodo]
 
-		# Mark current node as visited and 
-		# adds to recursion stack 
-		visited[v] = True
-		recStack[v] = True
+	def verificar_ciclos(self,vertice_inicial):
+		nodos_visitados = set()
+		nodos_restantes = self._data[vertice_inicial]
 
-		# Recur for all vizinhoss 
-		# if any vizinhos is visited and in 
-		# recStack then grafo is cyclic 
-		for vizinhos in self.grafo[v]: 
-			if visited[vizinhos] == False: 
-				if self.isCyclicUtil(vizinhos, visited, recStack) == True: 
-					return True
-			elif recStack[vizinhos] == True: 
-				return True
+		while nodos_restantes:
+			nodo_atual = nodos_restantes.pop()
+			nodos_visitados.add(nodo_atual)
 
-		# The node needs to be poped from 
-		# recursion stack before function ends 
-		recStack[v] = False
-		return False
-
-	# Returns true if grafo is cyclic else false 
-	def isCyclic(self): 
-		visited = [False] * self.V 
-		recStack = [False] * self.V 
-		for node in range(self.V): 
-			if visited[node] == False: 
-				if self.isCyclicUtil(node, visited, recStack) == True: 
-					return True
+			for vizinho in self.vizinhos(nodo_atual):
+				if vizinho in nodos_visitados:
+						return True
+				nodos_restantes.append(vizinho)
 		return False

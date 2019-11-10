@@ -1,0 +1,16 @@
+import itertools
+
+def separa_listas(agendamento_s):
+    lista_id = []
+    dicionario_t = {}
+    for s in agendamento_s:
+        if s.id not in lista_id:
+            lista_id.append(s.id)
+            x = [t for t in agendamento_s if t.id == s.id]
+            dicionario_t.update({s.id:x})
+    for keys,values in dicionario_t.items():
+        print(keys)
+        for x in values:
+            print(x.tempo_chegada,x.id,x.operacao,x.atributo)
+def equivalencia_visao(agendamento_s):
+    separa_listas(agendamento_s)
