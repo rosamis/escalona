@@ -1,11 +1,8 @@
 import itertools
 
-def lista_permuta(dicionario_t):
-    lista_chave = []
+def lista_permuta(lista_id):
 
-    for chave in dicionario_t:
-        lista_chave.append(chave)
-    return list(itertools.permutations(lista_chave))
+    return list(itertools.permutations(lista_id))
 
 def separa_listas(lista_agendamento_s):
     lista_id = []
@@ -14,13 +11,13 @@ def separa_listas(lista_agendamento_s):
         if s.id not in lista_id:
             lista_id.append(s.id)
             x = [t for t in lista_agendamento_s if t.id == s.id]
-            dicionario_t.update({s.id:x})
- 
-    return dicionario_t
+            dicionario_t.update({s.id:x}) 
+    return dicionario_t, lista_id
     
 def equivalencia_visao(lista_agendamento_s):
-    dicionario_t = separa_listas(lista_agendamento_s)
-    lista_p = lista_permuta(dicionario_t)
+    dicionario_t, lista_id = separa_listas(lista_agendamento_s)
+    lista_p = lista_permuta(lista_id)
+    print(lista_p)
     for permuta in lista_p:
         lista_agendamento_s1 = []
         #print(dicionario_t[permuta[0]])
