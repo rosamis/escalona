@@ -17,7 +17,6 @@ def separa_listas(lista_agendamento_s):
 def equivalencia_visao(lista_agendamento_s):
     dicionario_t, lista_id = separa_listas(lista_agendamento_s)
     lista_p = lista_permuta(lista_id)
-    print(lista_p)
     for permuta in lista_p:
         lista_agendamento_s1 = []
         #print(dicionario_t[permuta[0]])
@@ -27,5 +26,6 @@ def equivalencia_visao(lista_agendamento_s):
             for dados in d:
                 lista_agendamento_s1.append((tempo_chegada, dados.id, dados.operacao, dados.atributo))
                 tempo_chegada += 1
+            print(lista_agendamento_s1)
 
 
