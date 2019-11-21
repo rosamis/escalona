@@ -1,9 +1,12 @@
 import grafo
+import visao
+import copy
 
-def lista_escalona(lista_transacoes):
+def lista_escalona(lista_agendamento_s):
     """
     Lista que guarda listas com os escalonamentos
     """
+    lista_transacoes = copy.deepcopy(lista_agendamento_s)
     lista_commit = [t for t in lista_transacoes if t.operacao == 'C']
     transacoes_atuais = []
     lista_escalona = []
@@ -32,14 +35,16 @@ def gera_saida(grafo,id_escalonamento):
         return (id_escalonamento,grafo.vertices,'SS')
      
 
-def serializacao_conflito(lista_transacoes):
-    lista_escalonados = lista_escalona(lista_transacoes)
+def serializacao_conflito(lista_agendamento_s):
+    lista_escalonados = lista_escalona(lista_agendamento_s)
     lista_saidas = []
     id_escalonamento = 1
     for escalonamento in lista_escalonados:
         lista_passados = []
         g = grafo.Grafo("serial")
+        #print("\n")
         for tj in escalonamento:
+            #print(tj.tempo_chegada,tj.id,tj.operacao,tj.atributo)
             #print(transacao.tempo_chegada,transacao.id,transacao.operacao,transacao.atributo)
             # Adiciona vertices no grafo
             if tj.id not in g.vertices:

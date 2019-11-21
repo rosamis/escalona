@@ -12,18 +12,20 @@ def le_arquivo():
 
     with open(inFile,'r') as i:
         linhas = i.readlines()
-    lista_transacoes = [t.Transacao(i.split(' ')) for i in linhas]
+    lista_agendamento_s = [t.Transacao(i.split(' ')) for i in linhas]
 
-    return lista_transacoes
+    return lista_agendamento_s
 
 def main():
     """
     Função principal da aplicação.
     """
-    lista_transacoes = le_arquivo()
+    lista_agendamento_s = le_arquivo()
+    #visao.imprime_transacao(lista_agendamento_s)
+    lista_saidas = conflito.serializacao_conflito(lista_agendamento_s)
+    #print(id(lista_agendamento_s))
     
-    lista_saidas = conflito.serializacao_conflito(lista_transacoes)
-    visao.equivalencia_visao(lista_transacoes)
+    visao.equivalencia_visao(lista_agendamento_s)
     #print(lista_saidas)
     #outFile = sys.argv[2]
     #print(outFile)
