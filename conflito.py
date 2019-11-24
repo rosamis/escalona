@@ -40,24 +40,49 @@ def seriabilidade(escalonamento):
         lista_passados.append(tj)
     return g
 
-def verifica_visao(escalonamento_s, escalonamento_s1):
-    lista_agendamento_s = copy.deepcopy(escalonamento_s)
-    #visao.imprime_transacao(escalonamento_s1)
+def leitura_apos_escrita(escalonamento_s,escalonamento_s1):
+    return True
+
+def ultima_escrita(escalonamento):
+    for i in reversed(escalonamento):
+        if i.operacao == 'W':
+            return (i.id, i.operacao, i.atributo)
+
+def ultima_escrita_igual(escalonamento_s,escalonamento_s1):
+    s = ultima_escrita(escalonamento_s)
+    s1 = ultima_escrita(escalonamento_s1)
+    return s==s1
+
+def mesmas_transacoes(escalonamento_s,escalonamento_s1):
+    return True
+
+def verifica_visao(lista_agendamento_s, escalonamento_s1):
+    escalonamento_s = copy.deepcopy(lista_agendamento_s)
+    #visao.imprime_transacao(escalonamento_s)
+    # Detecta se possui as mesmas transações
+    # Detecta se o último w de S também é de S1
+    # Detecta se tem consistencia entre leitura após escrita ou não
+    if(leitura_apos_escrita(escalonamento_s,escalonamento_s1) and ultima_escrita_igual(escalonamento_s,escalonamento_s1) and mesmas_transacoes(escalonamento_s,escalonamento_s1)):
+        print("entrou")
 
 def equivalencia_visao(escalonamento):
     #visao.imprime_transacao(escalonamento)
     print("\n")
     dicionario_t, lista_id = visao.separa_listas(escalonamento)
     permutas = visao.lista_permuta(lista_id)
-    print(permutas)
+    #print(permutas)
     for p in permutas:
         escalonamento_s1 = visao.cria_lista_s1(p, dicionario_t)
-        visao.imprime_transacao(escalonamento_s1)
+        #print("escalona s\n")
+        #visao.imprime_transacao(escalonamento)
+        #print("\n")
+        #print("escalona s1\n")
+        #visao.imprime_transacao(escalonamento_s1)
         print("\n")
+        #print(p)
         verifica_visao(escalonamento,escalonamento_s1)
-        # Detecta se possui as mesmas transações
-        # Detecta se o último w de S também é de S1
-        # Detecta se tem consistencia entre leitura após escrita ou não
+        return
+
 
 def conflito_escalonamento(lista_escalonados):
     #visao.imprime_transacao(lista_escalonados)
