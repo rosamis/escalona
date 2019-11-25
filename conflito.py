@@ -40,18 +40,42 @@ def seriabilidade(escalonamento):
         lista_passados.append(tj)
     return g
 
-def leitura_apos_escrita(escalonamento_s,escalonamento_s1):
+def lista_atributos(escalonamento):
+    atributos = []
+    for e in escalonamento:
+        if e.atributo not in atributos and e.atributo != "-":
+            atributos.append(e.atributo)
+
+    return atributos
+
+def primeira_leitura(escalonamento,atributo):
+    for i in escalonamento:
+        if i.operacao == 'R' and i.atributo == atributo:
+            return (i.id, i.operacao, i.atributo)
+
+def primeira_leitura_igual(escalonamento_s,escalonamento_s1,atributos):
+    for a in atributos:
+        s = primeira_leitura(escalonamento_s,a)
+        s1 = primeira_leitura(escalonamento_s1,a)
+        if s != s1:
+            return False
+    return s == s1
+
+def leitura_apos_escrita(escalonamento_s,escalonamento_s1,atributos):
     
     return True
 
-def ultima_escrita(escalonamento):
+def ultima_escrita(escalonamento,atributo):
     for i in reversed(escalonamento):
-        if i.operacao == 'W':
+        if i.operacao == 'W' and i.atributo == atributo:
             return (i.id, i.operacao, i.atributo)
 
-def ultima_escrita_igual(escalonamento_s,escalonamento_s1):
-    s = ultima_escrita(escalonamento_s)
-    s1 = ultima_escrita(escalonamento_s1)
+def ultima_escrita_igual(escalonamento_s,escalonamento_s1,atributos):
+    for a in atributos:
+        s = ultima_escrita(escalonamento_s,a)
+        s1 = ultima_escrita(escalonamento_s1,a)
+        if s != s1:
+            return False
     return s == s1
 
 def mesmas_transacoes(escalonamento_s,escalonamento_s1):
@@ -62,11 +86,12 @@ def mesmas_transacoes(escalonamento_s,escalonamento_s1):
 
 def verifica_visao(lista_agendamento_s, escalonamento_s1):
     escalonamento_s = copy.deepcopy(lista_agendamento_s)
+    atributos = lista_atributos(escalonamento_s)
     #visao.imprime_transacao(escalonamento_s)
     # Detecta se possui as mesmas transações
     # Detecta se o último w de S também é de S1
     # Detecta se tem consistencia entre leitura após escrita ou não
-    if(mesmas_transacoes(escalonamento_s,escalonamento_s1) and ultima_escrita_igual(escalonamento_s,escalonamento_s1) and leitura_apos_escrita(escalonamento_s,escalonamento_s1)):
+    if(mesmas_transacoes(escalonamento_s,escalonamento_s1) and ultima_escrita_igual(escalonamento_s,escalonamento_s1,atributos) and primeira_leitura_igual(escalonamento_s,escalonamento_s1,atributos) and leitura_apos_escrita(escalonamento_s,escalonamento_s1,atributos)):
         print("entrou")
 
 def equivalencia_visao(escalonamento):
