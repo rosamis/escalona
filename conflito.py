@@ -62,7 +62,8 @@ def primeira_leitura_igual(escalonamento_s,escalonamento_s1,atributos):
     return s == s1
 
 def leitura_apos_escrita(escalonamento_s,escalonamento_s1,atributos):
-    
+    lista_passados = []
+    # percorre s, acha read e procura write nos passados, se achou, passa como parametro para procurar no s1
     return True
 
 def ultima_escrita(escalonamento,atributo):
