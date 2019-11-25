@@ -41,6 +41,7 @@ def seriabilidade(escalonamento):
     return g
 
 def leitura_apos_escrita(escalonamento_s,escalonamento_s1):
+    
     return True
 
 def ultima_escrita(escalonamento):
@@ -51,9 +52,12 @@ def ultima_escrita(escalonamento):
 def ultima_escrita_igual(escalonamento_s,escalonamento_s1):
     s = ultima_escrita(escalonamento_s)
     s1 = ultima_escrita(escalonamento_s1)
-    return s==s1
+    return s == s1
 
 def mesmas_transacoes(escalonamento_s,escalonamento_s1):
+    for i in escalonamento_s:
+        if (not any((x.id == i.id and x.atributo == i.atributo and x.operacao == i.operacao) for x in escalonamento_s1)):
+            return False
     return True
 
 def verifica_visao(lista_agendamento_s, escalonamento_s1):
@@ -62,12 +66,12 @@ def verifica_visao(lista_agendamento_s, escalonamento_s1):
     # Detecta se possui as mesmas transações
     # Detecta se o último w de S também é de S1
     # Detecta se tem consistencia entre leitura após escrita ou não
-    if(leitura_apos_escrita(escalonamento_s,escalonamento_s1) and ultima_escrita_igual(escalonamento_s,escalonamento_s1) and mesmas_transacoes(escalonamento_s,escalonamento_s1)):
+    if(mesmas_transacoes(escalonamento_s,escalonamento_s1) and ultima_escrita_igual(escalonamento_s,escalonamento_s1) and leitura_apos_escrita(escalonamento_s,escalonamento_s1)):
         print("entrou")
 
 def equivalencia_visao(escalonamento):
     #visao.imprime_transacao(escalonamento)
-    print("\n")
+    #print("\n")
     dicionario_t, lista_id = visao.separa_listas(escalonamento)
     permutas = visao.lista_permuta(lista_id)
     #print(permutas)
@@ -78,7 +82,7 @@ def equivalencia_visao(escalonamento):
         #print("\n")
         #print("escalona s1\n")
         #visao.imprime_transacao(escalonamento_s1)
-        print("\n")
+        #print("\n")
         #print(p)
         verifica_visao(escalonamento,escalonamento_s1)
         return
