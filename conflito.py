@@ -74,11 +74,11 @@ def leitura_apos_escrita(escalonamento_s,escalonamento_s1,atributos):
     lista_passados = []
     # percorre s, acha read e procura write nos passados, se achou, passa como parametro para procurar no s1
     for tj in escalonamento_s:
-        # Detecta leitura após escrita
-        if tj.operacao == 'R':
+        # Detecta escrita após leitura
+        if tj.operacao == 'W':
             for ti in lista_passados:
                 #print(ti.atributo,ti.id,ti.operacao,ti.tempo_chegada)
-                if ti.id != tj.id and ti.operacao == 'W' and tj.atributo == ti.atributo:
+                if ti.id != tj.id and ti.operacao == 'R' and tj.atributo == ti.atributo:
                     #print('aa')
                     #print(ti.atributo,ti.id,ti.operacao,ti.tempo_chegada)
                     #print(procura_em_s1(ti,tj,escalonamento_s1))
