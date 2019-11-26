@@ -1,4 +1,5 @@
 from collections import defaultdict
+import copy
 
 class Grafo():
 	def __init__(self,nome):
@@ -17,7 +18,8 @@ class Grafo():
 
 	def verificar_ciclos(self,vertice_inicial):
 		nodos_visitados = set()
-		nodos_restantes = self._data[vertice_inicial]
+		
+		nodos_restantes = copy.deepcopy(self._data[vertice_inicial])
 
 		while nodos_restantes:
 			nodo_atual = nodos_restantes.pop()
