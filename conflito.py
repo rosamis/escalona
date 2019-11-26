@@ -54,6 +54,7 @@ def primeira_leitura(escalonamento,atributo):
             return (i.id, i.operacao, i.atributo)
 
 def primeira_leitura_igual(escalonamento_s,escalonamento_s1,atributos):
+    return True
     for a in atributos:
         s = primeira_leitura(escalonamento_s,a)
         s1 = primeira_leitura(escalonamento_s1,a)
@@ -61,9 +62,33 @@ def primeira_leitura_igual(escalonamento_s,escalonamento_s1,atributos):
             return False
     return s == s1
 
+def procura_em_s1(ti,tj,escalonamento_s1):
+    print("\nti")
+    print(tj.tempo_chegada,tj.id,tj.operacao,tj.atributo)
+    print("\ntj")
+    print(ti.tempo_chegada,ti.id,ti.operacao,ti.atributo)
+    print("\n")
+    return list(filter(lambda e: (e.id == ti.id and e.operacao == ti.operacao and e.atributo == ti.atributo or e.id == tj.id and e.operacao == tj.operacao and e.atributo == tj.atributo),escalonamento_s1))
+
 def leitura_apos_escrita(escalonamento_s,escalonamento_s1,atributos):
     lista_passados = []
     # percorre s, acha read e procura write nos passados, se achou, passa como parametro para procurar no s1
+    for tj in escalonamento_s:
+        # Detecta leitura após escrita
+        if tj.operacao == 'R':
+            for ti in lista_passados:
+                #print(ti.atributo,ti.id,ti.operacao,ti.tempo_chegada)
+                if ti.id != tj.id and ti.operacao == 'W' and tj.atributo == ti.atributo:
+                    #print('aa')
+                    #print(ti.atributo,ti.id,ti.operacao,ti.tempo_chegada)
+                    #print(procura_em_s1(ti,tj,escalonamento_s1))
+                    print ("\nfiltro")
+                    visao.imprime_transacao(procura_em_s1(ti,tj,escalonamento_s1))
+                    print ("\nesca")
+                    visao.imprime_transacao(escalonamento_s1)
+                    #if(not procura_em_s1(ti,tj,escalonamento_s1)):
+                    #    return False
+        lista_passados.append(tj)
     return True
 
 def ultima_escrita(escalonamento,atributo):
@@ -72,6 +97,7 @@ def ultima_escrita(escalonamento,atributo):
             return (i.id, i.operacao, i.atributo)
 
 def ultima_escrita_igual(escalonamento_s,escalonamento_s1,atributos):
+    return True
     for a in atributos:
         s = ultima_escrita(escalonamento_s,a)
         s1 = ultima_escrita(escalonamento_s1,a)
@@ -100,8 +126,8 @@ def equivalencia_visao(escalonamento):
     #print("\n")
     dicionario_t, lista_id = visao.separa_listas(escalonamento)
     permutas = visao.lista_permuta(lista_id)
-    #print(permutas)
     for p in permutas:
+        print(p)
         escalonamento_s1 = visao.cria_lista_s1(p, dicionario_t)
         #print("escalona s\n")
         #visao.imprime_transacao(escalonamento)
@@ -111,7 +137,6 @@ def equivalencia_visao(escalonamento):
         #print("\n")
         #print(p)
         verifica_visao(escalonamento,escalonamento_s1)
-        return
 
 
 def conflito_escalonamento(lista_escalonados):
@@ -125,5 +150,6 @@ def conflito_escalonamento(lista_escalonados):
         equivalencia_visao(escalonamento)
         lista_saidas.append(gera_saida(g,id_escalonamento))
         id_escalonamento += 1
+        return
     #print (lista_saidas)
     return lista_saidas
