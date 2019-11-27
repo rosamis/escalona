@@ -15,11 +15,6 @@ def lista_escalona(lista_agendamento_s):
     lista_escalona = []
     lista_aux =  []
     for transacao in lista_transacoes:
-        #print("-------------------------------------------")
-        #print("transacao atual = ", transacao)
-        #print("transacoes_atuais = ", transacoes_atuais)
-        # print(lista_commit)
-        #print("Lista AUX = ", lista_aux)
         if transacao.id not in transacoes_atuais:
             transacoes_atuais.append(transacao.id)
         if transacao in lista_commit:
@@ -43,21 +38,42 @@ def le_arquivo():
 
     return lista_agendamento_s
 
+def escreve_arquivo(lista_saidas):
+    outFile = sys.argv[2] 
+
+    with open(outFile,'w') as o:
+        for l in lista_saidas:
+            o.write(l)
+            o.write("\n")
+
+def gera_saida(grafo,id_escalonamento,e):
+    if grafo.verificar_ciclos(grafo.vertices[0]) and e:
+        return str(id_escalonamento) + ' ' + ','.join(str(e) for e in grafo.vertices) + ' ' +'NS' + ' ' +'SV'
+    elif not grafo.verificar_ciclos(grafo.vertices[0]) and not e:
+        return str(id_escalonamento) + ' ' + ','.join(str(e) for e in grafo.vertices) + ' ' + 'SS' + ' ' + 'NV'
+    elif grafo.verificar_ciclos(grafo.vertices[0]) and not e:
+        return str(id_escalonamento) + ' ' + ','.join(str(e) for e in grafo.vertices) + ' ' + 'NS' + ' ' + 'NV'
+    elif not grafo.verificar_ciclos(grafo.vertices[0]) and e:
+        return str(id_escalonamento) + ' ' + ','.join(str(e) for e in grafo.vertices) + ' ' + 'SS' + ' ' + 'SV'
+
+def conflito_escalonamento(lista_escalonados):
+    lista_saidas = []
+    id_escalonamento = 1
+    for escalonamento in lista_escalonados:
+        g = conflito.seriabilidade(escalonamento)
+        e = visao.equivalencia_visao(escalonamento)
+        lista_saidas.append(gera_saida(g,id_escalonamento,e))
+        id_escalonamento += 1
+    return lista_saidas
+
 def main():
     """
     Função principal da aplicação.
     """
     lista_agendamento_s = le_arquivo()
-    #visao.imprime_transacao(lista_agendamento_s)
     lista_escalonados = lista_escalona(lista_agendamento_s)
-    #visao.imprime_lista(lista_escalonados)
-    lista_saidas = conflito.conflito_escalonamento(lista_escalonados)
-    #print(id(lista_agendamento_s))
-    
-    #visao.equivalencia_visao(lista_agendamento_s)
-    #print(lista_saidas)
-    #outFile = sys.argv[2]
-    #print(outFile)
+    lista_saidas = conflito_escalonamento(lista_escalonados)
+    escreve_arquivo(lista_saidas)
 
 if __name__ == "__main__":
     main()
