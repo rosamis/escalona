@@ -30,21 +30,18 @@ def le_arquivo():
     """
     Função que lê arquivo e retorna lista de objetos em que cada objeto contem: tempo_chegada,id,operacao e atributo
     """
-    inFile = sys.argv[1]
-
-    with open(inFile,'r') as i:
-        linhas = i.readlines()
+    inFile = sys.stdin
+    linhas = inFile.readlines()
     lista_agendamento_s = [t.Transacao(i.split(' ')) for i in linhas]
 
     return lista_agendamento_s
 
 def escreve_arquivo(lista_saidas):
-    outFile = sys.argv[2] 
+    outFile = sys.stdout
 
-    with open(outFile,'w') as o:
-        for l in lista_saidas:
-            o.write(l)
-            o.write("\n")
+    for l in lista_saidas:
+        outFile.write(l)
+        outFile.write("\n")
 
 def gera_saida(grafo,id_escalonamento,e):
     if grafo.verificar_ciclos(grafo.vertices[0]) and e:
@@ -74,6 +71,3 @@ def main():
     lista_escalonados = lista_escalona(lista_agendamento_s)
     lista_saidas = conflito_escalonamento(lista_escalonados)
     escreve_arquivo(lista_saidas)
-
-if __name__ == "__main__":
-    main()
