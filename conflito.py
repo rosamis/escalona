@@ -1,9 +1,10 @@
+## @package conflito
+#  Este arquivo contém a função que calcula se um escalonamento é serializável ou não.
+#  Trabalho desenvolvido para fins da disciplina de Banco de Dados, feito por Roberta Samistraro Tomigian.
+
 import grafo
 import visao
 import copy
-
-## @package conflito
-#  Este arquivo contém a função que calcula se um escalonamento é serializável ou não.
 
 ## Função que recebe um escalonamento e adiciona arestas em um grafo direcionado para cada condição satisfeita.
 #  A função adicionará aresta no grafo para mesmo atributo, mesma operação e em transações distintas nos seguintes casos:   

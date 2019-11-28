@@ -1,5 +1,6 @@
 ## @package transacao
 #  Este arquivo contém a classe Transação.
+#  Trabalho desenvolvido para fins da disciplina de Banco de Dados, feito por Roberta Samistraro Tomigian.
 
 ## Classe que guarda uma transação.
 #

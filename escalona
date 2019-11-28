@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+## @package script escalona
+#  Script que toda o main
+#  Trabalho desenvolvido para fins da disciplina de Banco de Dados, feito por Roberta Samistraro Tomigian.
+
 import escalona
 
 if __name__ == "__main__":

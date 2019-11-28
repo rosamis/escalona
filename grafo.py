@@ -1,7 +1,9 @@
-from collections import defaultdict
-import copy
 ## @package grafo
 #  Este arquivo contém a classe Grafo.
+#  Trabalho desenvolvido para fins da disciplina de Banco de Dados, feito por Roberta Samistraro Tomigian.
+
+from collections import defaultdict
+import copy
 
 ## Classe que guarda um grafo.
 #

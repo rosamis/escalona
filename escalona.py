@@ -1,12 +1,13 @@
+## @package escalona
+#  Este arquivo contém as funções main, leitura e escrita de arquivo.
+#  Trabalho desenvolvido para fins da disciplina de Banco de Dados, feito por Roberta Samistraro Tomigian.
+
 import grafo
 import sys
 import transacao as t
 import conflito
 import visao
 import copy
-
-## @package escalona
-#  Este arquivo contém as funções main, leitura e escrita de arquivo.
 
 ## Função que recebe a lista de agendamento lida do arquivo e separa as transações de modo que obtenha uma lista que guarda uma lista com os escalonamentos.
 #  Em que, cada escalonamento possui todas as operações de transações que estão operando juntas, isto é, que rodam em paralelo até o commit de ambas.
