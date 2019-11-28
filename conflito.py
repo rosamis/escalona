@@ -2,6 +2,21 @@ import grafo
 import visao
 import copy
 
+## @package conflito
+#  Este arquivo contém a função que calcula se um escalonamento é serializável ou não.
+
+## Função que recebe um escalonamento e adiciona arestas em um grafo direcionado para cada condição satisfeita.
+#  A função adicionará aresta no grafo para mesmo atributo, mesma operação e em transações distintas nos seguintes casos:   
+#
+#  - Leitura após escrita.
+#
+#  - Escrita após leitura.
+#
+#  - Escrita após escrita.
+#
+#  @param escalonamento É uma lista de objeto que guarda o tempo de chegada, id, operação e atributo de cada transação.
+#  @return g É um grafo que contém como vértice todos os id do escalonamento e as arestas encontradas na função, se existirem.
+
 def seriabilidade(escalonamento):
     lista_passados = []
     g = grafo.Grafo("serial")

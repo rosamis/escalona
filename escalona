@@ -3,5 +3,4 @@
 import escalona
 
 if __name__ == "__main__":
-    # print(sys.stdin.readlines())
     escalona.main()

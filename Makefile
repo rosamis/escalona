@@ -2,4 +2,7 @@ all:
 	chmod +x escalona
 
 clean:
-	rm -rf teste.out
+	rm -rf *.out
+
+doc: $(OBJ) 
+	doxygen config.dox
